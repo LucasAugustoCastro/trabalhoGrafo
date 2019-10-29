@@ -35,69 +35,71 @@ class Main:
         rageEmail = r"[a-z]{1}.*\@(([a-z]*)|([0-9])*)\.com|\.br|\.com\.br"
         linha1 = lines[2][6:].replace('\n', '')
         #linha2 = lines[3][4:].replace('\n', '')
-        matches = re.finditer(rageEmail, lines[3][4:].replace('\n', ''), re.MULTILINE)
+        if "To" in lines[3]:
 
-        vertices2 = ""
+            matches = re.finditer(rageEmail, lines[3][4:].replace('\n', ''), re.MULTILINE)
 
-        for conts, cont in enumerate(matches):
-            print(cont)
-            
-            vertices2 =cont.group()
-        vertices2 = vertices2.split(",")
+            vertices2 = ""
+
+            for conts, cont in enumerate(matches):
 
 
-        v2 = []
-        v1 = Vertice(linha1)
-        for i in range(len(vertices2)):
-            vertices2[i] = vertices2[i].replace(" ", "")
-            v2.append(Vertice(vertices2[i].replace(" ","")))
+                vertices2 =cont.group()
+            vertices2 = vertices2.split(",")
+
+
+            v2 = []
+            v1 = Vertice(linha1)
+            for i in range(len(vertices2)):
+                vertices2[i] = vertices2[i].replace(" ", "")
+                v2.append(Vertice(vertices2[i].replace(" ","")))
 
 
 
 
-        bolV1 = False
-        bolV2 = False
-        indexV1 = None
-        indexV2 = None
-        for v in v2:
-            #print(v)
-            for i in range(len(self.lista)):
+            bolV1 = False
+            bolV2 = False
+            indexV1 = None
+            indexV2 = None
+            for v in v2:
+                #print(v)
+                for i in range(len(self.lista)):
 
-                if self.lista[i].info == v1.info:
+                    if self.lista[i].info == v1.info:
 
-                    bolV1 = True
-                    indexV1 = i
-                elif self.lista[i].info == v.info:
+                        bolV1 = True
+                        indexV1 = i
+                    elif self.lista[i].info == v.info:
 
-                    bolV2 = True
-                    indexV2 = i
-            if bolV1 == True and bolV2 == True:
-                #print("index v2",indexV2)
-                #print("index v1", indexV1)
-                self.lista[indexV1].listaEncadeada.atualizar(indexV2)
+                        bolV2 = True
+                        indexV2 = i
+                if bolV1 == True and bolV2 == True:
+                    #print("index v2",indexV2)
+                    #print("index v1", indexV1)
+                    self.lista[indexV1].listaEncadeada.atualizar(indexV2)
 
-            elif bolV2 == True and bolV1 == False:
-                self.lista.append(v1)
-                indexV1 = self.lista.index(v1)
+                elif bolV2 == True and bolV1 == False:
+                    self.lista.append(v1)
+                    indexV1 = self.lista.index(v1)
 
-                self.cont += 1
-                self.lista[indexV1].listaEncadeada.insere(indexV2, 1)
+                    self.cont += 1
+                    self.lista[indexV1].listaEncadeada.insere(indexV2, 1)
 
-            elif bolV2 == False and bolV1 == True:
-                self.lista.append(v)
+                elif bolV2 == False and bolV1 == True:
+                    self.lista.append(v)
 
-                indexV2 = self.lista.index(v)
-                self.cont += 1
-                self.lista[indexV1].listaEncadeada.insere(indexV2, 1)
+                    indexV2 = self.lista.index(v)
+                    self.cont += 1
+                    self.lista[indexV1].listaEncadeada.insere(indexV2, 1)
 
 
-            else:
-                self.lista.append(v1)
-                self.lista.append(v)
-                self.cont += 2
-                indexV1 = self.lista.index(v1)
-                indexV2 = self.lista.index(v)
-                self.lista[indexV1].listaEncadeada.insere(indexV2, 1)
+                else:
+                    self.lista.append(v1)
+                    self.lista.append(v)
+                    self.cont += 2
+                    indexV1 = self.lista.index(v1)
+                    indexV2 = self.lista.index(v)
+                    self.lista[indexV1].listaEncadeada.insere(indexV2, 1)
 
 
 
@@ -111,11 +113,11 @@ class Main:
 
         soma = 0
         self.listar_pasta(self.pasta)
-        '''for cont in self.lista:
+        for cont in self.lista:
             print(soma,'[', cont.info, ']', end='->')
             cont.listaEncadeada.printarLista()
             print()
-            soma+=1'''
+            soma+=1
 
 def main():
     comeco = Main('Base de Enron')
