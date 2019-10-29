@@ -79,6 +79,9 @@ def dfs_paths(graph, start, goal):
                 stack.append((next, path + [next]))
     return stack
 
+def alcancabilidade(graph_list, start, max_range):
+    return None
+
 
 class Main:
     def __init__(self,pasta):
@@ -191,7 +194,14 @@ class Main:
             print()
             soma+=1
 
-        
+
+        # Da forma que esta ele vai printar o menor caminho de tds os vertices ate o vertice 53 com tamanho 5
+        # Para usar as funçoes de tds os caminhos possiveis:
+            #Comentar o try e o except
+            #Comentar o print q esta fora do for
+            #Descomentar bfs_path ou dfs_path
+            #Descomentar o print e o else
+        caminhos_existentes = []
         for i in range(len(self.lista)):
             try :
                 caminhos = list(menor_caminho(self.lista, i, 53))
@@ -199,7 +209,11 @@ class Main:
                 caminhos = []
             # caminhos = list(bfs_paths(self.lista, i, 53))
             # caminhos = list(dfs_paths(self.lista, i, 53))
-            print(str(i) + str(caminhos if caminhos != [] else " Nenhum caminho possivel entre " + self.lista[i].getInfo() + " e " + self.lista[53].getInfo()))
+            if caminhos != []:
+                caminhos_existentes.append(caminhos)
+                # print(str(i) + str(caminhos))
+            # else: print(" Nenhum caminho possivel entre " + self.lista[i].getInfo() + " e " + self.lista[53].getInfo())
+        print("caminhos de tamanho 5: " + str([i for i in caminhos_existentes if len(i) == 5]))
 
 
 def main():
