@@ -43,12 +43,21 @@ class ListaEncadeada:
 
     def atualizar(self, index):
         ponteiro = self.lista
-        while True:
-            if(index == ponteiro.index):
+        loop = True
+        while loop:
+
+            if ponteiro == None:
+                self.insere(index, 1)
+                loop = False
+            elif(index == ponteiro.index):
                 ponteiro.valorAresta +=1
-                break
+                loop = False
             else:
-                ponteiro = ponteiro.prox
+                if ponteiro.prox == None:
+                    self.insere(index,1)
+                    loop = False
+                else:
+                    ponteiro = ponteiro.prox
 
 
 
