@@ -113,40 +113,46 @@ class Main:
         soma = 0
         print('entrou')
         self.listar_pasta(self.pasta)
+        print('terminou de carregar')
 
-
-        for cont in self.lista:
-            print(soma,'[', cont.info, ']', end='->')
-            cont.listaEncadeada.printarLista()
-            print()
-            soma+=1
+        # for cont in self.lista:
+        #     print(soma,'[', cont.info, ']', end='->')
+        #     cont.listaEncadeada.printarLista()
+        #     print()
+        #     soma+=1
 
         print(list(bfs_paths(self.lista, 4, 53)))
-        print(list(dfs_paths(self.lista, 4, 53)))
+        # print(list(dfs_paths(self.lista, 4, 53)))
+
+        # for i in list(bfs(self.lista, 4)):
+        #     distancia = 2
+        #     for j in bfs_paths(self.lista, 4, i):
+        #         if len(j) - 1 == distancia:
+        #             print(j)
 
 
+def bfs(graph, start):
+    visited, queue = set(), [start]
+    while queue:
+        vertex = queue.pop(0)
+        if vertex not in visited:
+            visited.add(vertex)
+            jonas = set()
+            if graph[vertex].listaEncadeada.retornaLista() != None:
+                for i in graph[vertex].listaEncadeada.retornaLista():
+                    if (i == None):
+                        pass
+                    else:
+                        jonas.add(i[0])
+            queue.extend(jonas - visited)
 
-# def bfs(graph, start):
-#     visited, queue = set(), [start]
-#     while queue:
-#         vertex = queue.pop(0)
-#         if vertex not in visited:
-#             visited.add(vertex)
-#             jonas = set()
-#             if graph[vertex].listaEncadeada.retornaLista() != None:
-#                 for i in graph[vertex].listaEncadeada.retornaLista():
-#                     if (i == None):
-#                         pass
-#                     else:
-#                         jonas.add(i[0])
-#             queue.extend(jonas - visited)
-#
-#     return visited
+    return visited
 
 def bfs_paths(graph, start, goal):
     queue = [(start, [start])]
     while queue:
         (vertex, path) = queue.pop(0)
+        print(vertex)
         jonas = set()
         if graph[vertex].listaEncadeada.retornaLista() != None:
             for i in graph[vertex].listaEncadeada.retornaLista():
