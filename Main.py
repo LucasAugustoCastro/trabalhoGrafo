@@ -1,9 +1,85 @@
 import os
-
-from ListaEncadeada import *
-from Aresta import *
-from Vertice import *
 import re
+
+from Vertice import *
+
+# def bfs(graph, start):
+#     visited, queue = set(), [start]
+#     while queue:
+#         vertex = queue.pop(0)
+#         if vertex not in visited:
+#             visited.add(vertex)
+#             jonas = set()
+#             if graph[vertex].listaEncadeada.retornaLista() != None:
+#                 for i in graph[vertex].listaEncadeada.retornaLista():
+#                     if (i == None):
+#                         pass
+#                     else:
+#                         jonas.add(i[0])
+#             queue.extend(jonas - visited)
+#
+#     return visited
+
+# def dfs(graph, start):
+#     visited, stack = set(), [start]
+#     while stack:
+#         vertex = stack.pop()
+#         if vertex not in visited:
+#             visited.add(vertex)
+#             jonas = set()
+#             if graph[vertex].listaEncadeada.retornaLista() != None:
+#                 for i in graph[vertex].listaEncadeada.retornaLista():
+#                     if (i == None):
+#                         pass
+#                     else:
+#                         jonas.add(i[0])
+#             stack.extend(jonas - visited)
+#     return visited
+
+def menor_caminho(graph, start, goal):
+    try:
+        return next(bfs_paths(graph, start, goal))
+    except StopIteration:
+        return None
+
+def bfs_paths(graph, start, goal):
+    queue = [(start, [start])]
+    while queue:
+        (vertex, path) = queue.pop(0)
+        jonas = set()
+        if graph[vertex].listaEncadeada.retornaLista() != None:
+            for i in graph[vertex].listaEncadeada.retornaLista():
+                if (i == None):
+                    pass
+                else:
+                    jonas.add(i[0])
+        for next in jonas - set(path):
+            if next == goal:
+                yield path + [next]
+            else:
+                queue.append((next, path + [next]))
+
+    return queue
+
+def dfs_paths(graph, start, goal):
+    stack = [(start, [start])]
+    while stack:
+        (vertex, path) = stack.pop()
+        jonas = set()
+        if graph[vertex].listaEncadeada.retornaLista() != None:
+            for i in graph[vertex].listaEncadeada.retornaLista():
+                if (i == None):
+                    pass
+                else:
+                    jonas.add(i[0])
+        for next in jonas - set(path):
+            if next == goal:
+                yield path + [next]
+            else:
+                stack.append((next, path + [next]))
+    return stack
+
+
 class Main:
     def __init__(self,pasta):
         self.lista = []
@@ -44,7 +120,7 @@ class Main:
             for conts, cont in enumerate(matches):
 
 
-                vertices2 =cont.group()
+                vertices2 = cont.group()
             vertices2 = vertices2.split(",")
 
 
@@ -102,36 +178,38 @@ class Main:
                     self.lista[indexV1].listaEncadeada.insere(indexV2, 1)
 
 
-
-
-
-
-
-
-
     def inicio(self):
 
         soma = 0
+        print('entrou')
         self.listar_pasta(self.pasta)
+
+
         for cont in self.lista:
             print(soma,'[', cont.info, ']', end='->')
             cont.listaEncadeada.printarLista()
             print()
             soma+=1
 
+        
+        for i in range(len(self.lista)):
+            try :
+                caminhos = list(menor_caminho(self.lista, i, 53))
+            except:
+                caminhos = []
+            # caminhos = list(bfs_paths(self.lista, i, 53))
+            # caminhos = list(dfs_paths(self.lista, i, 53))
+            print(str(i) + str(caminhos if caminhos != [] else " Nenhum caminho possivel entre " + self.lista[i].getInfo() + " e " + self.lista[53].getInfo()))
+
+
 def main():
+    print("oi")
     comeco = Main('Base de Enron')
     comeco.inicio()
 
 
-
-
-
-
 if __name__ == "__main__":
     main()
-
-
 
 
 
