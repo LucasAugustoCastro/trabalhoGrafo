@@ -41,6 +41,18 @@ class ListaEncadeada:
 
                 self.ponteiro = self.ponteiro.prox
 
+    def retornaLista(self):
+        vetorLista = []
+        self.ponteiro = self.lista
+
+        if self.ponteiro == None:
+            return None
+        else:
+            while (self.ponteiro != None):
+                vetorLista.append([self.ponteiro.index, self.ponteiro.valorAresta])
+                self.ponteiro = self.ponteiro.prox
+            return vetorLista
+
     def atualizar(self, index):
         ponteiro = self.lista
         loop = True

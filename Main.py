@@ -108,18 +108,96 @@ class Main:
 
 
 
-
     def inicio(self):
 
         soma = 0
+        print('entrou')
         self.listar_pasta(self.pasta)
+
+
         for cont in self.lista:
             print(soma,'[', cont.info, ']', end='->')
             cont.listaEncadeada.printarLista()
             print()
             soma+=1
 
+        print(list(bfs_paths(self.lista, 4, 53)))
+        print(list(dfs_paths(self.lista, 4, 53)))
+
+
+
+# def bfs(graph, start):
+#     visited, queue = set(), [start]
+#     while queue:
+#         vertex = queue.pop(0)
+#         if vertex not in visited:
+#             visited.add(vertex)
+#             jonas = set()
+#             if graph[vertex].listaEncadeada.retornaLista() != None:
+#                 for i in graph[vertex].listaEncadeada.retornaLista():
+#                     if (i == None):
+#                         pass
+#                     else:
+#                         jonas.add(i[0])
+#             queue.extend(jonas - visited)
+#
+#     return visited
+
+def bfs_paths(graph, start, goal):
+    queue = [(start, [start])]
+    while queue:
+        (vertex, path) = queue.pop(0)
+        jonas = set()
+        if graph[vertex].listaEncadeada.retornaLista() != None:
+            for i in graph[vertex].listaEncadeada.retornaLista():
+                if (i == None):
+                    pass
+                else:
+                    jonas.add(i[0])
+        for next in jonas - set(path):
+            if next == goal:
+                yield path + [next]
+            else:
+                queue.append((next, path + [next]))
+
+    return queue
+
+def dfs_paths(graph, start, goal):
+    stack = [(start, [start])]
+    while stack:
+        (vertex, path) = stack.pop()
+        jonas = set()
+        if graph[vertex].listaEncadeada.retornaLista() != None:
+            for i in graph[vertex].listaEncadeada.retornaLista():
+                if (i == None):
+                    pass
+                else:
+                    jonas.add(i[0])
+        for next in jonas - set(path):
+            if next == goal:
+                yield path + [next]
+            else:
+                stack.append((next, path + [next]))
+    return stack
+# def dfs(graph, start):
+#     visited, stack = set(), [start]
+#     while stack:
+#         vertex = stack.pop()
+#         if vertex not in visited:
+#             visited.add(vertex)
+#             jonas = set()
+#             if graph[vertex].listaEncadeada.retornaLista() != None:
+#                 for i in graph[vertex].listaEncadeada.retornaLista():
+#                     if (i == None):
+#                         pass
+#                     else:
+#                         jonas.add(i[0])
+#             stack.extend(jonas - visited)
+#     return visited
+
+
 def main():
+    print("oi")
     comeco = Main('Base de Enron')
     comeco.inicio()
 
