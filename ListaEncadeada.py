@@ -65,11 +65,12 @@ class ListaEncadeada:
                 ponteiro.valorAresta +=1
                 loop = False
             else:
-                if ponteiro.prox == None:
+                ponteiro = ponteiro.prox
+                '''if ponteiro.prox == None:
                     self.insere(index,1)
                     loop = False
                 else:
-                    ponteiro = ponteiro.prox
+                    ponteiro = ponteiro.prox'''
 
 
 
